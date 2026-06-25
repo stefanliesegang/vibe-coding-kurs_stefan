@@ -180,7 +180,7 @@ body {
     padding: 0 2rem;
     height: 700px;
     border-radius: 20px;
-    overflow: hidden;
+    overflow: visible;
     box-shadow: var(--shadow);
 }
 
@@ -192,16 +192,16 @@ body {
 
 /* ==================== INFO PANEL ==================== */
 .info-panel {
-    position: absolute;
+    position: fixed;
     bottom: 2rem;
     left: 2rem;
     width: 350px;
     background: var(--white);
     border-radius: 15px;
-    box-shadow: var(--shadow);
+    box-shadow: var(--shadow-hover);
     transform: translateY(400px);
     transition: transform 0.3s ease;
-    z-index: 50;
+    z-index: 999;
     max-height: 500px;
     overflow-y: auto;
 }
@@ -667,7 +667,7 @@ textarea:focus {
     .info-panel {
         width: calc(100% - 4rem);
         left: 1rem;
-        right: 1rem;
+        right: auto;
     }
 
     .favorites-grid {
