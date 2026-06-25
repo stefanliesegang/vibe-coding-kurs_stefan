@@ -205,7 +205,8 @@ function showPlaceInfo(place) {
     function createStarRating(rating) {
         let stars = '';
         for (let i = 0; i < 5; i++) {
-            stars += i < Math.round(rating) ? '⭐' : '☆';
+            // i < rating bedeutet: wenn Index (0-4) kleiner als rating ist, volles Stern
+            stars += i < Math.floor(rating) ? '⭐' : '☆';
         }
         return stars;
     }
@@ -282,15 +283,32 @@ function calculateAverageRatings(ratings) {
 
     if (ratings.length === 0) return avg;
 
+    let toddlerCount = 0;
+    let childCount = 0;
+    let teenCount = 0;
+
     ratings.forEach(rating => {
-        avg.toddler += rating.toddlerRating || 0;
-        avg.child += rating.childRating || 0;
-        avg.teen += rating.teenRating || 0;
+        // Zähle nur bewertete Kategorien
+        if (rating.toddlerRating > 0) {
+            avg.toddler += rating.toddlerRating;
+            toddlerCount++;
+        }
+        if (rating.childRating > 0) {
+            avg.child += rating.childRating;
+            childCount++;
+        }
+        if (rating.teenRating > 0) {
+            avg.teen += rating.teenRating;
+            teenCount++;
+        }
     });
 
-    avg.toddler /= ratings.length;
-    avg.child /= ratings.length;
-    avg.teen /= ratings.length;
+    // Berechne Durchschnitt nur wenn es Bewertungen gibt
+    avg.toddler = toddlerCount > 0 ? avg.toddler / toddlerCount : 0;
+    avg.child = childCount > 0 ? avg.child / childCount : 0;
+    avg.teen = teenCount > 0 ? avg.teen / teenCount : 0;
+
+    console.log('Average Ratings:', avg); // Debug
 
     return avg;
 }
@@ -473,22 +491,27 @@ let selectedRatings = {
 function selectRating(e) {
     const star = e.target;
     const rating = parseInt(star.dataset.rating);
-    const parent = star.parentElement;
-    const ageGroup = parent.parentElement.parentElement;
+    const starsContainer = star.parentElement;  // .stars div
+    const ageRatingDiv = starsContainer.parentElement;  // .age-rating div
+    const label = ageRatingDiv.querySelector('label');
+    const labelText = label.textContent;
     
+    // Identifiziere die Altersgruppe basierend auf dem Label-Text
     let ageType;
-    if (ageGroup.querySelector('label').textContent.includes('Kleinkind')) {
+    if (labelText.includes('Kleinkind')) {
         ageType = 'toddler';
-    } else if (ageGroup.querySelector('label').textContent.includes('Kind')) {
+    } else if (labelText.includes('Kind') && !labelText.includes('Kleinkind')) {
         ageType = 'child';
-    } else {
+    } else if (labelText.includes('Teenager')) {
         ageType = 'teen';
     }
 
+    console.log('Selected:', ageType, 'Rating:', rating); // Debug
+
     selectedRatings[ageType] = rating;
 
-    // Update visual
-    parent.querySelectorAll('.star').forEach((s, index) => {
+    // Update visual - alle Sterne in diesem Container
+    starsContainer.querySelectorAll('.star').forEach((s, index) => {
         if (index < rating) {
             s.classList.add('active');
         } else {
@@ -496,7 +519,11 @@ function selectRating(e) {
         }
     });
 
-    ageGroup.querySelector('input[type="hidden"]').value = rating;
+    // Update hidden input
+    const hiddenInput = ageRatingDiv.querySelector('input[type="hidden"]');
+    if (hiddenInput) {
+        hiddenInput.value = rating;
+    }
 }
 
 function hoverRating(e) {
