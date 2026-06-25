@@ -49,10 +49,23 @@ body {
     align-items: center;
 }
 
-.logo {
-    font-size: 1.8rem;
+.logo-container {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+}
+
+.logo-image {
+    width: 45px;
+    height: 45px;
+    filter: drop-shadow(0 2px 4px rgba(0, 0, 0, 0.2));
+}
+
+.logo-text {
+    font-size: 1.5rem;
     font-weight: bold;
     color: var(--white);
+    letter-spacing: 1px;
 }
 
 .nav-links {
@@ -91,23 +104,23 @@ body {
 .hero {
     background: linear-gradient(135deg, var(--primary-pink) 0%, var(--primary-blue) 50%, var(--primary-green) 100%);
     color: var(--white);
-    padding: 6rem 2rem;
+    padding: 2.5rem 2rem;
     text-align: center;
-    min-height: 400px;
+    min-height: 200px;
     display: flex;
     align-items: center;
     justify-content: center;
 }
 
 .hero-content h1 {
-    font-size: 3rem;
-    margin-bottom: 1rem;
+    font-size: 2rem;
+    margin-bottom: 0.5rem;
     animation: slideInDown 0.6s ease;
 }
 
 .hero-content p {
-    font-size: 1.3rem;
-    margin-bottom: 2rem;
+    font-size: 1rem;
+    margin-bottom: 1.5rem;
     opacity: 0.95;
 }
 
@@ -648,8 +661,25 @@ textarea:focus {
         gap: 1rem;
     }
 
+    .logo-container {
+        gap: 0.5rem;
+    }
+
+    .logo-image {
+        width: 35px;
+        height: 35px;
+    }
+
+    .logo-text {
+        font-size: 1.1rem;
+    }
+
     .hero-content h1 {
-        font-size: 2rem;
+        font-size: 1.4rem;
+    }
+
+    .hero-content p {
+        font-size: 0.9rem;
     }
 
     .category-buttons {

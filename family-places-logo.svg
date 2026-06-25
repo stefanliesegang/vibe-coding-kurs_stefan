@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<svg viewBox="0 0 200 200" xmlns="http://www.w3.org/2000/svg">
+  <!-- Hintergrund-Kreis -->
+  <circle cx="100" cy="100" r="95" fill="#FF6B9D" opacity="0.1"/>
+  
+  <!-- Haupt-Marker/Pin (Familien-Haus) -->
+  <path d="M 100 30 L 130 60 L 130 110 Q 130 125 115 125 L 85 125 Q 70 125 70 110 L 70 60 Z" 
+        fill="#4A90E2" stroke="#2C3E50" stroke-width="2"/>
+  
+  <!-- Dach des Hauses -->
+  <polygon points="100,30 70,60 130,60" fill="#FF6B9D" stroke="#2C3E50" stroke-width="2"/>
+  
+  <!-- Fenster (Familie symbolisieren) -->
+  <circle cx="85" cy="70" r="6" fill="#FFC107"/>
+  <circle cx="100" cy="70" r="6" fill="#FFC107"/>
+  <circle cx="115" cy="70" r="6" fill="#FFC107"/>
+  
+  <!-- Tür -->
+  <rect x="95" y="85" width="10" height="20" fill="#9B59B6" stroke="#2C3E50" stroke-width="1.5"/>
+  
+  <!-- Kategorien-Icons um den Pin herum -->
+  
+  <!-- Top-Left: Restaurant (🍽️ als Gabel & Löffel) -->
+  <g transform="translate(40, 45)">
+    <circle cx="0" cy="0" r="18" fill="#7ED321" opacity="0.9"/>
+    <!-- Gabel -->
+    <line x1="-6" y1="-8" x2="-6" y2="8" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="-8" y1="-8" x2="-4" y2="-8" stroke="#2C3E50" stroke-width="2"/>
+    <line x1="-8" y1="0" x2="-4" y2="0" stroke="#2C3E50" stroke-width="2"/>
+    <!-- Löffel -->
+    <ellipse cx="6" cy="-6" rx="4" ry="5" fill="#2C3E50"/>
+    <line x1="6" y1="0" x2="6" y2="8" stroke="#2C3E50" stroke-width="2"/>
+    <text x="0" y="0" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">🍽️</text>
+  </g>
+  
+  <!-- Top-Right: Aktivität (🎨 als Palette) -->
+  <g transform="translate(160, 45)">
+    <circle cx="0" cy="0" r="18" fill="#9B59B6" opacity="0.9"/>
+    <text x="0" y="2" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">🎨</text>
+  </g>
+  
+  <!-- Bottom-Left: Sport (⚽ als Ball) -->
+  <g transform="translate(40, 155)">
+    <circle cx="0" cy="0" r="18" fill="#4A90E2" opacity="0.9"/>
+    <text x="0" y="2" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">⚽</text>
+  </g>
+  
+  <!-- Bottom-Right: Parks (🌳 als Baum) -->
+  <g transform="translate(160, 155)">
+    <circle cx="0" cy="0" r="18" fill="#7ED321" opacity="0.9"/>
+    <text x="0" y="2" font-size="20" font-weight="bold" text-anchor="middle" dominant-baseline="central" fill="#FFFFFF">🌳</text>
+  </g>
+  
+  <!-- Verbindungslinien zu den Kategorien -->
+  <line x1="100" y1="55" x2="55" y2="55" stroke="#4A90E2" stroke-width="1.5" opacity="0.5" stroke-dasharray="3,3"/>
+  <line x1="110" y1="50" x2="145" y2="50" stroke="#9B59B6" stroke-width="1.5" opacity="0.5" stroke-dasharray="3,3"/>
+  <line x1="90" y1="125" x2="55" y2="150" stroke="#4A90E2" stroke-width="1.5" opacity="0.5" stroke-dasharray="3,3"/>
+  <line x1="110" y1="125" x2="145" y2="150" stroke="#7ED321" stroke-width="1.5" opacity="0.5" stroke-dasharray="3,3"/>
+</svg>
