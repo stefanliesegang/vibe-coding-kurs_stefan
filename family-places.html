@@ -1,0 +1,167 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>FamilyPlaces - Familienfreundliche Orte & Aktivitäten</title>
+    <link rel="stylesheet" href="family-places-styles.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="logo">🏠 FamilyPlaces</div>
+            <div class="nav-links">
+                <a href="#home">Start</a>
+                <a href="#map">Karte</a>
+                <a href="#favorites">❤️ Favoriten</a>
+                <button id="loginBtn" class="btn-login">Login</button>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <header class="hero" id="home">
+        <div class="hero-content">
+            <h1>🎉 Entdecke familienfreundliche Orte!</h1>
+            <p>Finde die besten Restaurants, Parks, Aktivitäten und Sport-Möglichkeiten für Familien</p>
+            <a href="#map" class="cta-button">Zur Karte</a>
+        </div>
+    </header>
+
+    <!-- Kategorie Filter -->
+    <section class="filters-section">
+        <h2>Kategorien</h2>
+        <div class="category-buttons">
+            <button class="category-btn active" data-category="all">Alle</button>
+            <button class="category-btn" data-category="restaurant">🍽️ Restaurants</button>
+            <button class="category-btn" data-category="activity">🎨 Aktivitäten</button>
+            <button class="category-btn" data-category="sport">⚽ Sport</button>
+            <button class="category-btn" data-category="park">🌳 Parks</button>
+        </div>
+    </section>
+
+    <!-- Map Section -->
+    <section class="map-section" id="map">
+        <div id="map-container"></div>
+        
+        <!-- Info Panel -->
+        <div class="info-panel">
+            <div class="info-header">
+                <h3 id="place-name">Wähle einen Ort auf der Karte</h3>
+                <button class="close-btn" id="closeInfoBtn">✕</button>
+            </div>
+            <div class="info-content">
+                <div id="place-details"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Favorites Section -->
+    <section class="favorites-section" id="favorites">
+        <h2>❤️ Meine Favoriten</h2>
+        <div id="favorites-list" class="favorites-grid"></div>
+    </section>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Willkommen!</h2>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab-btn active" data-tab="login">Login</button>
+                <button class="auth-tab-btn" data-tab="register">Registrieren</button>
+            </div>
+
+            <!-- Login Form -->
+            <div id="login-tab" class="auth-tab-content active">
+                <form id="loginForm">
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Passwort" required>
+                    <button type="submit" class="btn-primary">Login</button>
+                </form>
+            </div>
+
+            <!-- Register Form -->
+            <div id="register-tab" class="auth-tab-content">
+                <form id="registerForm">
+                    <input type="text" placeholder="Name" required>
+                    <input type="email" placeholder="Email" required>
+                    <input type="password" placeholder="Passwort" required>
+                    <input type="password" placeholder="Passwort wiederholen" required>
+                    <button type="submit" class="btn-primary">Registrieren</button>
+                </form>
+            </div>
+        </div>
+    </div>
+
+    <!-- Rating Modal -->
+    <div id="ratingModal" class="modal">
+        <div class="modal-content">
+            <span class="close-modal">&times;</span>
+            <h2>Bewertung für: <span id="rating-place-name"></span></h2>
+            
+            <form id="ratingForm">
+                <!-- Age Group Ratings -->
+                <div class="rating-group">
+                    <h4>Altersgruppen - Wie geeignet ist dieser Ort?</h4>
+                    
+                    <div class="age-rating">
+                        <label>👶 Kleinkind (1-5 Jahre)</label>
+                        <div class="stars">
+                            <span class="star" data-rating="1">⭐</span>
+                            <span class="star" data-rating="2">⭐</span>
+                            <span class="star" data-rating="3">⭐</span>
+                            <span class="star" data-rating="4">⭐</span>
+                            <span class="star" data-rating="5">⭐</span>
+                        </div>
+                        <input type="hidden" name="toddler-rating" value="0">
+                    </div>
+
+                    <div class="age-rating">
+                        <label>👧 Kind (6-13 Jahre)</label>
+                        <div class="stars">
+                            <span class="star" data-rating="1">⭐</span>
+                            <span class="star" data-rating="2">⭐</span>
+                            <span class="star" data-rating="3">⭐</span>
+                            <span class="star" data-rating="4">⭐</span>
+                            <span class="star" data-rating="5">⭐</span>
+                        </div>
+                        <input type="hidden" name="child-rating" value="0">
+                    </div>
+
+                    <div class="age-rating">
+                        <label>👦 Teenager (14+ Jahre)</label>
+                        <div class="stars">
+                            <span class="star" data-rating="1">⭐</span>
+                            <span class="star" data-rating="2">⭐</span>
+                            <span class="star" data-rating="3">⭐</span>
+                            <span class="star" data-rating="4">⭐</span>
+                            <span class="star" data-rating="5">⭐</span>
+                        </div>
+                        <input type="hidden" name="teen-rating" value="0">
+                    </div>
+                </div>
+
+                <!-- Comment -->
+                <div class="comment-section">
+                    <label for="comment">Kommentar (optional):</label>
+                    <textarea id="comment" name="comment" placeholder="Teile deine Erfahrung..." rows="4"></textarea>
+                </div>
+
+                <button type="submit" class="btn-primary">Bewertung absenden</button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <p>&copy; 2026 FamilyPlaces - Für Familien, von Familien</p>
+    </footer>
+
+    <script src="family-places-app.js"></script>
+</body>
+</html>
