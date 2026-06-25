@@ -201,20 +201,51 @@ function showPlaceInfo(place) {
         </div>
     `;
 
+    // Funktion für Stern-Anzeige
+    function createStarRating(rating) {
+        let stars = '';
+        for (let i = 0; i < 5; i++) {
+            stars += i < Math.round(rating) ? '⭐' : '☆';
+        }
+        return stars;
+    }
+
     if (placeRatings.length > 0) {
         const avgRatings = calculateAverageRatings(placeRatings);
         html += `
             <div class="rating-summary">
-                <h4>Durchschnittliche Bewertungen:</h4>
-                <div class="age-rating-display">
-                    <span>👶 Kleinkind: ${avgRatings.toddler.toFixed(1)} ⭐</span>
+                <h4>📊 Bewertungen nach Altersgruppe:</h4>
+                <div class="age-rating-row">
+                    <div class="age-rating-item">
+                        <span class="age-label">👶 Kleinkind (1-5)</span>
+                        <span class="rating-stars">${createStarRating(avgRatings.toddler)}</span>
+                        <span class="rating-value">${avgRatings.toddler.toFixed(1)}/5</span>
+                    </div>
                 </div>
-                <div class="age-rating-display">
-                    <span>👧 Kind: ${avgRatings.child.toFixed(1)} ⭐</span>
+                <div class="age-rating-row">
+                    <div class="age-rating-item">
+                        <span class="age-label">👧 Kind (6-13)</span>
+                        <span class="rating-stars">${createStarRating(avgRatings.child)}</span>
+                        <span class="rating-value">${avgRatings.child.toFixed(1)}/5</span>
+                    </div>
                 </div>
-                <div class="age-rating-display">
-                    <span>👦 Teenager: ${avgRatings.teen.toFixed(1)} ⭐</span>
+                <div class="age-rating-row">
+                    <div class="age-rating-item">
+                        <span class="age-label">👦 Teenager (14+)</span>
+                        <span class="rating-stars">${createStarRating(avgRatings.teen)}</span>
+                        <span class="rating-value">${avgRatings.teen.toFixed(1)}/5</span>
+                    </div>
                 </div>
+                <div class="rating-count">
+                    <small>ℹ️ basierend auf ${placeRatings.length} Bewertung${placeRatings.length !== 1 ? 'en' : ''}</small>
+                </div>
+            </div>
+        `;
+    } else {
+        html += `
+            <div class="rating-summary no-ratings">
+                <p>⏳ Noch keine Bewertungen</p>
+                <small>Sei der Erste, der diesen Ort bewertet!</small>
             </div>
         `;
     }
